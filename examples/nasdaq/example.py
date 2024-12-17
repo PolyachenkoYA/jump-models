@@ -51,13 +51,14 @@ from jumpmodels.sparse_jump import SparseJumpModel    # class of Sparse JM
 
 from feature import DataLoader
 
-data = DataLoader(ticker="NDX", ver="v0").load(start_date="2007-1-1", end_date="2024-09-30")
+data = DataLoader(ticker="NDX", ver="v0").load(start_date="2007-1-1")  # , end_date="2024-09-30"
 
 print("Daily returns stored in `data.ret_ser`:", "-"*50, sep="\n")
 print(data.ret_ser, "-"*50, sep="\n")
 print("Features stored in `data.X`:", "-"*50, sep="\n")
 print(data.X)
 
+input('ok')
 
 # ## Train/Test Split and Preprocessing
 # 

@@ -12,27 +12,36 @@ include_home_dir()
 import numpy as np
 import pandas as pd
 import yfinance as yf
+from datetime import datetime
 
 from jumpmodels.utils import check_dir_exist
 
-TICKER = "NDX"   # Nasdaq-100 Index
+ #= "NDX"   # Nasdaq-100 Index
 
-def get_data():
-    # download closing prices
-    close: pd.Series = yf.download("^"+TICKER, start="1985-10-01", end="2024-09-30")['Close']
-    # convert to ret
-    ret = close.pct_change()
-    # concat as df
-    df = pd.DataFrame({"close": close, "ret": ret}, index=close.index.date)
-    df.index.name = "date"
-
-    # save
-    curr_dir = get_curr_dir()
-    data_dir = f"{curr_dir}/data/"; check_dir_exist(data_dir)
-    pd.to_pickle(df, f"{data_dir}{TICKER}.pkl")
-    np.round(df, 6).to_csv(f"{data_dir}{TICKER}.csv")
-    print("Successfully downloaded data for ticker:", TICKER)
-    return 
+def get_data(TICKER, start=None, end=None, to_save=True):
+	if(start is None):
+		start = "1985-10-01"
+	if(end is None):
+		end = datetime.today().strftime('%Y-%m-%d')
+	
+	# download closing prices
+	close: pd.Series = yf.download("^"+TICKER, start=start, end=end)['Close']
+	# convert to ret
+	ret = close.pct_change()
+	# concat as df
+	df = pd.DataFrame({"close": close.to_numpy().flatten(), "ret": ret.to_numpy().flatten()}, index=close.index.date)
+	df.index.name = "date"
+	
+	# save
+	if(to_save):
+		curr_dir = get_curr_dir()
+		data_dir = f"{curr_dir}/data/"; check_dir_exist(data_dir)
+		pd.to_pickle(df, f"{data_dir}{TICKER}.pkl")
+		np.round(df, 6).to_csv(f"{data_dir}{TICKER}.csv")
+	
+	print("Successfully downloaded data for ticker:", TICKER)
+	
+	return df
 
 if __name__ == "__main__":
-    get_data()
+	get_data()
