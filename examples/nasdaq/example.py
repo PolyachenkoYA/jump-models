@@ -48,10 +48,15 @@ from jumpmodels.sparse_jump import SparseJumpModel    # class of Sparse JM
 
 # In[2]:
 
+start_date = "2007-1-1"
+end_date = None
+#end_date = "2024-09-30"
+
+to_download = (end_date is None)
 
 from feature import DataLoader
 
-data = DataLoader(ticker="NDX", ver="v0").load(start_date="2007-1-1")  # , end_date="2024-09-30"
+data = DataLoader(ticker="NDX", ver="v0").load(start_date=start_date, end_date=end_date, to_download=to_download)
 
 print("Daily returns stored in `data.ret_ser`:", "-"*50, sep="\n")
 print(data.ret_ser, "-"*50, sep="\n")

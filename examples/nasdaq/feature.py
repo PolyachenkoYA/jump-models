@@ -41,6 +41,7 @@ def compute_ewm_DD(ret_ser: pd.Series, hl: float) -> pd.Series:
 	"""
 	ret_ser_neg: pd.Series = np.minimum(ret_ser, 0.)
 	sq_mean = ret_ser_neg.pow(2).ewm(halflife=hl).mean()
+	
 	return np.sqrt(sq_mean)
 
 # reviewed
@@ -111,7 +112,7 @@ class DataLoader(BaseEstimator):
 		self.ver = ver
 
 	# reviewed
-	def load(self, start_date: DATE_TYPE = None, end_date: DATE_TYPE = None, to_download=False):
+	def load(self, start_date: DATE_TYPE = None, end_date: DATE_TYPE = None, to_download=False, to_save=False):
 		"""
 		Load the raw return data, compute features, and filter by date range.
 
@@ -131,9 +132,10 @@ class DataLoader(BaseEstimator):
 		# load raw data
 		curr_dir = get_curr_dir()
 		if(to_download):
-			ret_ser_raw = pd.read_pickle(f"{curr_dir}/data/{self.ticker}.pkl").ret.dropna()
+			ret_ser_raw = get_data.get_data(self.ticker, end=end_date, to_save=to_save)
+			ret_ser_raw = ret_ser_raw['ret'][1:]
 		else:
-			ret_ser_raw = get_data.get_data(self.ticker, start=start_date, end=end_date, to_save=False)
+			ret_ser_raw = pd.read_pickle(f"{curr_dir}/data/{self.ticker}.pkl").ret.dropna()
 		
 		# print(ret_ser_raw)
 		# print(type(ret_ser_raw))
@@ -144,8 +146,9 @@ class DataLoader(BaseEstimator):
 		# print(yf_data)
 		# print(type(yf_data))
 		# print(type(yf_series))
-		print(ret_ser_raw)
-		input('ok1')
+		#print(ret_ser_raw)
+		#print(type(ret_ser_raw))
+		#input('ok1')
 		
 		ret_ser_raw.name = self.ticker
 		# features
