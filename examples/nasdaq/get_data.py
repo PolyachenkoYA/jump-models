@@ -18,14 +18,18 @@ from jumpmodels.utils import check_dir_exist
 
  #= "NDX"   # Nasdaq-100 Index
 
-def get_data(TICKER, start=None, end=None, to_save=True):
+def get_data(TICKER, start=None, end=None, to_save=True, name_prefix=''):
 	if(start is None):
-		start = "1985-10-01"
+		#start = "1985-10-01"
+		start = 'max'
 	if(end is None):
 		end = datetime.today().strftime('%Y-%m-%d')
 	
 	# download closing prices
-	close: pd.Series = yf.download("^"+TICKER, start=start, end=end)['Close']
+	if(len(start) == 10):
+		close: pd.Series = yf.download(name_prefix+TICKER, start=start, end=end)['Close']
+	else:
+		close: pd.Series = yf.download(name_prefix+TICKER, period=start)['Close']
 	# convert to ret
 	ret = close.pct_change()
 	# concat as df

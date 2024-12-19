@@ -137,19 +137,6 @@ class DataLoader(BaseEstimator):
 		else:
 			ret_ser_raw = pd.read_pickle(f"{curr_dir}/data/{self.ticker}.pkl").ret.dropna()
 		
-		# print(ret_ser_raw)
-		# print(type(ret_ser_raw))
-		# print(start_date, end_date)
-		# yf_data = yf.download(self.ticker, start=start_date, end=end_date)
-		# yf_series = yf_data['Open'].T.squeeze()
-		# ret_ser_raw = (yf_series.shift(1) / yf_series).dropna() - 1
-		# print(yf_data)
-		# print(type(yf_data))
-		# print(type(yf_series))
-		#print(ret_ser_raw)
-		#print(type(ret_ser_raw))
-		#input('ok1')
-		
 		ret_ser_raw.name = self.ticker
 		# features
 		df_features_all = feature_engineer(ret_ser_raw, self.ver)
