@@ -4,12 +4,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 
+import os
+
 def send_email_with_attachment(\
 		receiver_email, \
 		file_path, \
 		sender_email = "polyachenkoya@gmail.com", \
-		password=open('/home/ypolyach/gmp.dat').readline()[:-1], \
-		subject = "Subject: File Attachment", \
+		password=open(os.path.join(os.path.expanduser("~"), 'gmp.dat')).readline()[:-1], \
+		subject = "MY_EMAIL_PY", \
 		body = "Hi,\n\nPlease find the attached file.\n\nBest regards,\nYury"):
 	"""
 	Sends an email with an attachment.
