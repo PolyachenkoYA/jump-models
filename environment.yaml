@@ -70,4 +70,5 @@ dependencies:
   - xz=5.2.6
   - zstd=1.5.6
   - yfinance
+  - aiosmtplib
 prefix: /Users/yizhan/mambaforge/envs/jm-pack-base

@@ -5,6 +5,7 @@
 
 import matplotlib.pyplot as plt
 import sys
+import os
 
 from utils_dir import get_curr_dir, include_home_dir
 include_home_dir()
@@ -386,9 +387,15 @@ if(to_do_SJP):
 	# plot
 	ax, ax2 = plot_regimes_and_cumret(labels_test_online_sjm, data.ret_ser, start_date=test_start, end_date=test_end, )
 	ax.set(title=f"Out-of-Sample Online Inferred Regimes by the SJM ($\\lambda$={jump_penalty}, $\\kappa^2$={max_feats})")
-	#savefig_plt(f"{get_curr_dir()}/plots/SJM_lambd-{jump_penalty}_max-feats-{max_feats}_test_online.pdf")
-
-plt.show()
+	
+	if(sys.argv[1] == 'email'):
+		pic_filepath = f"{get_curr_dir()}/plots/SJM_lambd-{jump_penalty}_max-feats-{max_feats}_test_online.pdf"
+		savefig_plt(pic_filepath)
+		from send_email import send_email_with_attachment
+		send_email_with_attachment('polyachenkoya@princeton.edu', pic_filepath)
+		os.remove(pic_filepath)
+	else:
+		plt.show()
 
 # # Conclusion
 # 
