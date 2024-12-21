@@ -392,7 +392,11 @@ if(to_do_SJP):
 		pic_filepath = f"{get_curr_dir()}/plots/SJM_lambd-{jump_penalty}_max-feats-{max_feats}_test_online.pdf"
 		savefig_plt(pic_filepath)
 		from send_email import send_email_with_attachment
-		send_email_with_attachment('polyachenkoya@princeton.edu', pic_filepath)
+		
+		emails_to_send = ['polyachenkoya@gmail.com']
+		for ea in emails_to_send:
+			send_email_with_attachment(ea, pic_filepath)
+		
 		os.remove(pic_filepath)
 	else:
 		plt.show()

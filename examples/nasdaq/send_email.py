@@ -6,6 +6,8 @@ from email import encoders
 
 import os
 
+# set gmp.dat to chmod 600
+
 def send_email_with_attachment(\
 		receiver_email, \
 		file_path, \
