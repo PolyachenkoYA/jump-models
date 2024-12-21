@@ -4,6 +4,7 @@
 # In[1]:
 
 import matplotlib.pyplot as plt
+import sys
 
 from utils_dir import get_curr_dir, include_home_dir
 include_home_dir()
@@ -331,11 +332,18 @@ if(to_do_SJP):
 	# In[17]:
 
 
+	# === big crushes ===
 	max_feats=3.
 	jump_penalty=50.
 
-	max_feats=5.
+	# === look for small drops to buy every month ===
+	max_feats=12.
+	jump_penalty=0.
+
+	# === small crushes ===
+	max_feats=10.
 	jump_penalty=10.
+
 	# init sjm instance
 	sjm = SparseJumpModel(n_components=2, max_feats=max_feats, jump_penalty=jump_penalty, )
 	# fit

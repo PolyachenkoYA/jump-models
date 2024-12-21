@@ -66,7 +66,7 @@ def feature_engineer(ret_ser: pd.Series, ver: str = "v0") -> pd.DataFrame:
 	"""
 	if ver == "v0":
 		feat_dict = {}
-		hls = [5, 20, 60]
+		hls = [2, 5, 20, 60]
 		for hl in hls:
 			# Feature 1: EWM-ret
 			feat_dict[f"ret_{hl}"] = ret_ser.ewm(halflife=hl).mean()
