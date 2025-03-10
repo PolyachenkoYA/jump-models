@@ -393,7 +393,7 @@ if(to_do_SJP):
 		savefig_plt(pic_filepath)
 		from send_email import send_email_with_attachment
 		
-		emails_to_send = ['polyachenkoya@gmail.com']
+		emails_to_send = ['polyachenkoya@princeton.edu']
 		for ea in emails_to_send:
 			send_email_with_attachment(ea, pic_filepath)
 		
